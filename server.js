@@ -24,6 +24,9 @@ const server = net.createServer((socket) => {
         if (!error) {
           console.log(`[SERVER] Client connected: ${socket.remoteAddress}:${socket.remotePort}`);
           clients.push({ username: msg.username, socket });
+          for (const client of clients) {
+            if (client.socket !== socket) client.socket.write(data);
+          }
         }
         break;
       case 'username':
