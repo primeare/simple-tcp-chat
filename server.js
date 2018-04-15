@@ -8,37 +8,35 @@ const server = net.createServer((socket) => {
   socket.setEncoding('utf8');
   socket.on('data', (data) => {
     const msg = JSON.parse(data);
-    let error = false;
     switch (msg.type) {
       case 'connect':
         for (const client of clients) {
           if (client.username === msg.username) {
-            socket.write(JSON.stringify({
+            return socket.write(JSON.stringify({
               type: 'bad-connect-username',
               username: msg.username
             }), 'utf8');
-            error = true;
-            break;
           }
         }
-        if (!error) {
-          console.log(`[SERVER] Client connected: ${socket.remoteAddress}:${socket.remotePort}`);
-          clients.push({ username: msg.username, socket });
+
+        console.log(`[SERVER] Client connected: ${socket.remoteAddress}:${socket.remotePort}`);
+        clients.push({ username: msg.username, socket });
+        for (const client of clients) {
+          if (client.socket !== socket) client.socket.write(data);
         }
         break;
       case 'username':
         if (msg.data === msg.username) break;
         for (const client of clients) {
           if (client.username === msg.data) {
-            socket.write(JSON.stringify({
+            return socket.write(JSON.stringify({
               type: 'bad-username',
               username: msg.data
             }), 'utf8');
-            error = true;
-            break;
           }
         }
-        if (!error) for (const client of clients) {
+
+        for (const client of clients) {
           if (client.socket !== socket) client.socket.write(data);
           if (client.socket === socket) client.username = msg.data;
         }
