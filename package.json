@@ -1,10 +1,14 @@
 {
+  "private": true,
+  "type": "module",
+  "sourceType": "module",
   "name": "simple-tcp-chat",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Simple Node.js TCP Chat using Net &amp; Readline Modules",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:server": "node --harmony src/server.js",
+    "start:client": "node --harmony src/client.js"
   },
   "repository": {
     "type": "git",
@@ -15,6 +19,9 @@
     "tcp",
     "socket"
   ],
+  "engines": {
+    "node": ">=13.3.0"
+  },
   "author": "Vladyslav Dukhin <vladyslav.dukhin@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -22,6 +29,6 @@
   },
   "homepage": "https://github.com/primeare/simple-tcp-chat#readme",
   "devDependencies": {
-    "eslint": "^4.19.0"
+    "eslint": "^6.7.2"
   }
 }
