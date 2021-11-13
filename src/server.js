@@ -7,7 +7,7 @@ import * as protocol from '../lib/protocol.js';
 const clients = new Map();
 const logger = new Logger();
 
-const isUsernameExist = newUsername => {
+const isUsernameExist = (newUsername) => {
   clients.forEach(({ username }) => {
     if (newUsername === username) return true;
   });
@@ -61,10 +61,10 @@ const broadcast = (data, ...exceptions) => {
   }
 };
 
-const server = net.createServer(socket => {
+const server = net.createServer((socket) => {
   socket.setEncoding('utf8');
 
-  socket.on('data', data => {
+  socket.on('data', (data) => {
     const request = protocol.parse(data);
     const handler = handlers[request.type] ?? handlers.default;
     const client = {
@@ -88,13 +88,13 @@ const server = net.createServer(socket => {
     clients.delete(socket);
   });
 
-  socket.on('error', err => {
+  socket.on('error', (err) => {
     logger.error('CLIENT: ' + inspect(err));
     socket.destroy();
   });
 });
 
-server.on('error', err => {
+server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
     logger.error('Server address/port is already in use');
   }
