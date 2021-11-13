@@ -7,8 +7,9 @@
   "description": "Simple Node.js TCP Chat using Net &amp; Readline Modules",
   "main": "server.js",
   "scripts": {
-    "start:server": "node --harmony src/server.js",
-    "start:client": "node --harmony src/client.js"
+    "start:server": "node src/server.js",
+    "start:client": "node src/client.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,6 @@
   },
   "homepage": "https://github.com/primeare/simple-tcp-chat#readme",
   "devDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^8.2.0"
   }
 }
